@@ -1,0 +1,40 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "title": "let us C",
+      "author": "yunus",
+      "available": true
+    },
+    {
+      "id": 2,
+      "title": "kill python",
+      "author": "upe",
+      "available": false
+    },
+    {
+      "id": 0.4240309594202216,
+      "title": "Java n",
+      "author": "Barola",
+      "available": false
+    },
+    {
+      "title": "book title...",
+      "author": "author...",
+      "id": 0.38633769627499026,
+      "available": true
+    },
+    {
+      "title": "book title...",
+      "author": "author...",
+      "id": 0.3215079731837476,
+      "available": false
+    },
+    {
+      "title": "wew this is workign as expected",
+      "author": "werwa this is al",
+      "id": 0.8193973786152295,
+      "available": true
+    }
+  ]
+}
