@@ -14,5 +14,12 @@ const updateNoteAt = (id, note) => {
     return axios.patch(`${baseUrl}/${id}`, note).then(response => response.data)
 }
 
-export default {getAllNotes, postNote, updateNoteAt}
+const note_services = {
+    getAllNotes,
+    postNote,
+    updateNoteAt
+}
+
+export default note_services
+    
 

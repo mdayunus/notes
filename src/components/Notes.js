@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
 import note_services from '../services/notes_services'
 
 const Note = (props) => {
@@ -15,6 +14,8 @@ const Notes = () => {
 
     const [notes, setNotes] = useState([])
     const [newNote, setNewNote] = useState({ title: 'book title...', author: 'author...' })
+    const [showAll, setShowAll] = useState(true)
+    const notesToShow = showAll ? notes : notes.filter(note => note.available === true)
 
     useEffect(() => {
         note_services.getAllNotes()
@@ -27,17 +28,15 @@ const Notes = () => {
             })
     }, [])
 
-
-
     const handleTitleChange = (event) => {
         console.log(event.target.value)
-        const updatedNote = {...newNote, title: event.target.value}
+        const updatedNote = { ...newNote, title: event.target.value }
         setNewNote(updatedNote)
     }
 
     const handleAuthorChange = (event) => {
         console.log(event.target.value)
-        const updatedNote = {...newNote, author: event.target.value}
+        const updatedNote = { ...newNote, author: event.target.value }
         setNewNote(updatedNote)
     }
 
@@ -49,20 +48,22 @@ const Notes = () => {
             "id": Math.random(),
             "available": Math.random() < 0.5
         }
-        axios
-            .post('http://localhost:3001/notes', createdNote)
-            .then(response => {
-                console.log(`new note to add ${response.data.title}`)
-                setNotes(notes.concat(response.data))
+        note_services.postNote(createdNote)
+            .then(postedNote => {
+                console.log(`new note to add ${postedNote}`)
+                setNotes(notes.concat(postedNote))
+                setNewNote({ title: 'book title...', author: 'author...' })
             })
     }
 
     const toggleAvailabiltyOf = (id) => {
-        console.log(`availability of book with ${id} needs to be changes`)
-    }
-
-    const toggleShowAvailable = () => {
-        console.log('show only available')
+        const noteToUpdate = notes.find(note => note.id === id)
+        const updatedNote = {...noteToUpdate, available: !noteToUpdate.available}
+        note_services.updateNoteAt(id, updatedNote)
+        .then(fetchedNote => {
+            console.log(fetchedNote)
+            setNotes(notes.map(note => note.id === id ? fetchedNote : note ))
+        })
     }
 
     return (
@@ -72,9 +73,9 @@ const Notes = () => {
                 <input value={newNote.author} onChange={handleAuthorChange} />
                 <button type='submit'>Save</button>
             </form>
-            <button onClick={toggleShowAvailable}>show all</button>
+            <button onClick={() => { setShowAll(!showAll) }}>{showAll ? 'Show Available' : 'Show All'}</button>
             <ul>
-                {notes.map(note =>
+                {notesToShow.map(note =>
                     <Note key={note.id} title={note.title}
                         available={note.available}
                         onClick={() => { toggleAvailabiltyOf(note.id) }} />)}
