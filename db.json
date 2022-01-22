@@ -4,111 +4,15 @@
       "id": 1,
       "title": "let us C",
       "author": "yunus",
-      "available": true,
+      "available": false,
       "mutable": false
     },
     {
       "id": 2,
       "title": "kill python",
       "author": "upe",
-      "available": false,
+      "available": true,
       "mutable": false
-    },
-    {
-      "id": 0.4240309594202216,
-      "title": "Java n",
-      "author": "Barola",
-      "available": false
-    },
-    {
-      "title": "book title...",
-      "author": "author...",
-      "id": 0.38633769627499026,
-      "available": true
-    },
-    {
-      "title": "book title...",
-      "author": "author...",
-      "id": 0.3215079731837476,
-      "available": false
-    },
-    {
-      "title": "wew this is workign as expected",
-      "author": "werwa this is al",
-      "id": 0.8193973786152295,
-      "available": false
-    },
-    {
-      "title": "js tkidding",
-      "author": "yunus",
-      "id": 0.9855267476962692,
-      "available": true
-    },
-    {
-      "title": "asd",
-      "author": "author...",
-      "id": 0.9330227409703797,
-      "available": false
-    },
-    {
-      "title": "book title...",
-      "author": "author...",
-      "id": 0.3384889002074525,
-      "available": false
-    },
-    {
-      "title": "mew",
-      "author": "yunu",
-      "id": 0.3012153494558687,
-      "available": false
-    },
-    {
-      "title": "ok",
-      "author": "nice",
-      "id": 0.46854125415732595,
-      "available": true
-    },
-    {
-      "title": "wewwe",
-      "author": "author...",
-      "id": 0.2803867621239666,
-      "available": false
-    },
-    {
-      "title": "qwewqe",
-      "author": "author...",
-      "id": 0.8426275232859897,
-      "available": false
-    },
-    {
-      "title": "book title...",
-      "author": "author...",
-      "id": 0.1598423241623934,
-      "available": false
-    },
-    {
-      "title": "wew",
-      "author": "noince",
-      "id": 0.036376185256558946,
-      "available": false
-    },
-    {
-      "title": "1",
-      "author": "2",
-      "id": 0.8085135896712363,
-      "available": true
-    },
-    {
-      "title": "2",
-      "author": "2",
-      "id": 0.24673792191743305,
-      "available": false
-    },
-    {
-      "title": "cs",
-      "author": "nishant",
-      "id": 0.655413742608828,
-      "available": true
     }
   ]
 }

@@ -34,8 +34,8 @@ const Notes = () => {
     const [newNote, setNewNote] = useState({ title: 'book title...', author: 'author...' })
     const [showAll, setShowAll] = useState(true)
     const [notificaitonMessage, setNotificationMessage] = useState({ message: null, type: null })
+    const [currentId, setId] = useState(0)
     const notesToShow = showAll ? notes : notes.filter(note => note.available === true)
-    let timeOutId = ''
 
     useEffect(() => {
         note_services.getAllNotes()
@@ -50,7 +50,7 @@ const Notes = () => {
                     type: 'failure'
                 }
                 setNotificationMessage(errMessage)
-                clearTimeout(timeOutId)
+                clearTimeout(currentId)
                 setTimeout(() => {
                     setNotificationMessage({ message: null, type: null })
                 }, 5000)
@@ -85,10 +85,10 @@ const Notes = () => {
                     type: 'success'
                 }
                 setNotificationMessage(successMessage)
-                clearTimeout(timeOutId)
-                timeOutId = setTimeout(() => {
+                clearTimeout(currentId)
+                setId(setTimeout(() => {
                     setNotificationMessage({ message: null, type: null })
-                }, 5000)
+                }, 5000))
                 setNotes(notes.concat(postedNote))
                 setNewNote({ title: 'book title...', author: 'author...' })
             })
@@ -104,10 +104,13 @@ const Notes = () => {
                     type: 'success'
                 }
                 setNotificationMessage(successMessage)
-                clearTimeout(timeOutId)
-                timeOutId = setTimeout(() => {
+                console.log('1', currentId)
+                clearTimeout(currentId)
+                console.log('2', currentId)
+                setId(setTimeout(() => {
                     setNotificationMessage({ message: null, type: null })
-                }, 5000)
+                }, 5000))
+                console.log('3', currentId)
                 console.log(fetchedNote)
                 setNotes(notes.map(note => note.id === id ? fetchedNote : note))
             })
