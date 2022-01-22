@@ -10,12 +10,32 @@ const Note = (props) => {
     )
 }
 
+const Notification = (props) => {
+    if (props.message === null) {
+        return null
+    }
+    if (props.message !== null && props.type === 'success') {
+        return (
+            <div className='sucessful'>
+                {props.message}
+            </div>
+        )
+    }
+    return (
+        <div className='error'>
+            {props.message}
+        </div>
+    )
+}
+
 const Notes = () => {
 
     const [notes, setNotes] = useState([])
     const [newNote, setNewNote] = useState({ title: 'book title...', author: 'author...' })
     const [showAll, setShowAll] = useState(true)
+    const [notificaitonMessage, setNotificationMessage] = useState({ message: null, type: null })
     const notesToShow = showAll ? notes : notes.filter(note => note.available === true)
+    let timeOutId = ''
 
     useEffect(() => {
         note_services.getAllNotes()
@@ -25,6 +45,15 @@ const Notes = () => {
             })
             .catch(err => {
                 console.log(`this is ane error ${err}`)
+                const errMessage = {
+                    message: 'there is a network error, please check your connection or retry again',
+                    type: 'failure'
+                }
+                setNotificationMessage(errMessage)
+                clearTimeout(timeOutId)
+                setTimeout(() => {
+                    setNotificationMessage({ message: null, type: null })
+                }, 5000)
             })
     }, [])
 
@@ -51,6 +80,15 @@ const Notes = () => {
         note_services.postNote(createdNote)
             .then(postedNote => {
                 console.log(`new note to add ${postedNote}`)
+                const successMessage = {
+                    message: `new note added by the name ${postedNote.title}`,
+                    type: 'success'
+                }
+                setNotificationMessage(successMessage)
+                clearTimeout(timeOutId)
+                timeOutId = setTimeout(() => {
+                    setNotificationMessage({ message: null, type: null })
+                }, 5000)
                 setNotes(notes.concat(postedNote))
                 setNewNote({ title: 'book title...', author: 'author...' })
             })
@@ -58,12 +96,21 @@ const Notes = () => {
 
     const toggleAvailabiltyOf = (id) => {
         const noteToUpdate = notes.find(note => note.id === id)
-        const updatedNote = {...noteToUpdate, available: !noteToUpdate.available}
+        const updatedNote = { ...noteToUpdate, available: !noteToUpdate.available }
         note_services.updateNoteAt(id, updatedNote)
-        .then(fetchedNote => {
-            console.log(fetchedNote)
-            setNotes(notes.map(note => note.id === id ? fetchedNote : note ))
-        })
+            .then(fetchedNote => {
+                const successMessage = {
+                    message: `updated availability of ${fetchedNote.title}`,
+                    type: 'success'
+                }
+                setNotificationMessage(successMessage)
+                clearTimeout(timeOutId)
+                timeOutId = setTimeout(() => {
+                    setNotificationMessage({ message: null, type: null })
+                }, 5000)
+                console.log(fetchedNote)
+                setNotes(notes.map(note => note.id === id ? fetchedNote : note))
+            })
     }
 
     return (
@@ -73,6 +120,7 @@ const Notes = () => {
                 <input value={newNote.author} onChange={handleAuthorChange} />
                 <button type='submit'>Save</button>
             </form>
+            <Notification message={notificaitonMessage.message} type={notificaitonMessage.type} />
             <button onClick={() => { setShowAll(!showAll) }}>{showAll ? 'Show Available' : 'Show All'}</button>
             <ul>
                 {notesToShow.map(note =>
