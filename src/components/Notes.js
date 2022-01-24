@@ -53,7 +53,7 @@ const Notes = () => {
                 clearTimeout(currentId)
                 setTimeout(() => {
                     setNotificationMessage({ message: null, type: null })
-                }, 5000)
+                }, 50000)
             })
     }, [])
 
